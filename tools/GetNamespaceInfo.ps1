@@ -17,7 +17,7 @@ function Get-SBNamespaceInfo
     }
 
     $PropertyBag = @{Namespace=$ns}
-    $CloudServiceDNS = (Resolve-DnsName $ns -Type CNAME).NameHost
+    $CloudServiceDNS = (Resolve-DnsName $ns).NameHost
     if ($CloudServiceDNS)
     {
         $Deployment = $CloudServiceDNS.Split('.')[0].ToUpperInvariant()
@@ -29,7 +29,7 @@ function Get-SBNamespaceInfo
 		}
 		else
 		{
-            if ((Resolve-DnsName $CloudServiceDNS -Type A).length -eq 2)
+            if ((Resolve-DnsName $ns -Type A).length -gt 1)
             {                
                 $CloudServiceDNS = (Resolve-DnsName $ns -Type A)[1].NameHost
                 $Deployment = $CloudServiceDNS.Split('.')[0].ToUpperInvariant()
